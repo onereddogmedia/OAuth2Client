@@ -141,8 +141,7 @@
 - (NSString*)tokenType
 {
     if ([tokenType isEqualToString:@""]) {
-        //fall back on OAuth if token type not set
-        return @"OAuth";
+        return nil;
     } else if ([tokenType isEqualToString:@"bearer"]) {
         //this is for out case sensitive server
         //oauth server should be case insensitive so this should make no difference
@@ -164,7 +163,7 @@
 
 - (NSString *)description;
 {
-    return [NSString stringWithFormat:@"<NXOAuth2Token token:%@ refreshToken:%@ expiresAt:%@>", self.accessToken, self.refreshToken, self.expiresAt];
+    return [NSString stringWithFormat:@"<NXOAuth2Token token:%@ refreshToken:%@ expiresAt:%@ tokenType: %@>", self.accessToken, self.refreshToken, self.expiresAt, self.tokenType];
 }
 
 
@@ -177,6 +176,9 @@
     [aCoder encodeObject:expiresAt forKey:@"expiresAt"];
     [aCoder encodeObject:scope forKey:@"scope"];
     [aCoder encodeObject:responseBody forKey:@"responseBody"];
+    if (tokenType) {
+        [aCoder encodeObject:tokenType forKey:@"tokenType"];
+    }
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -195,6 +197,7 @@
         expiresAt = [[aDecoder decodeObjectForKey:@"expiresAt"] copy];
         scope = [[aDecoder decodeObjectForKey:@"scope"] copy];
         responseBody = [[aDecoder decodeObjectForKey:@"responseBody"] copy];
+        tokenType = [[aDecoder decodeObjectForKey:@"tokenType"] copy];
     }
     return self;
 }

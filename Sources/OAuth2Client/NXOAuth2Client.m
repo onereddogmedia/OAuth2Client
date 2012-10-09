@@ -80,6 +80,7 @@ NSString * const NXOAuth2ClientConnectionContextTokenRefresh = @"tokenRefresh";
 - (void)dealloc;
 {
     [authConnection cancel];
+    [super dealloc];
 }
 
 

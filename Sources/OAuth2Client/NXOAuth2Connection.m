@@ -93,6 +93,8 @@ sendingProgressHandler:(NXOAuth2ConnectionSendingProgressHandler)aSendingProgres
 #if (NXOAuth2ConnectionDebug)
     [startDate release];
 #endif
+
+    [super dealloc];
 }
 
 
